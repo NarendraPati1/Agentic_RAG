@@ -31,17 +31,21 @@ Built using **LangChain**, **Google Gemini Pro**, **FAISS**, and **Streamlit**, 
 ## 📂 Project Structure
 
 📦 agentic-rag
+
 ├── 📄 app.py # Streamlit UI and main workflow
+
 ├── 📄 agent.py # LangChain agent initialization
+
 ├── 📄 retriever.py # FAISS vector store setup and document retrieval logic
+
 ├── 📄 tools.py # Custom tool definitions
+
 ├── 📄 requirements.txt # Dependencies
+
 ├── 📄 .env.example # Environment variable template
+
 └── 📂 data # Educational PDFs and documents
 
-yaml
-Copy
-Edit
 
 ---
 
