@@ -10,11 +10,10 @@ from langchain.agents import Tool, initialize_agent
 import asyncio
 asyncio.set_event_loop(asyncio.new_event_loop())
 
-# 1. Setup API key and working directory
-os.environ["GOOGLE_API_KEY"] = "AIzaSyDUH7JAHV6yt9KOd5vEBy1Im0bp7cnt9C8"
+
+os.environ["GOOGLE_API_KEY"] = "API_KEY"
 os.chdir("d:/projects/tutor")
 
-# 2. Subject and PDF files
 pdf_files = {
     "CNS": "CNS.pdf",
     "DBMS": "DBMS.pdf",
@@ -23,7 +22,6 @@ pdf_files = {
 }
 subjects = list(pdf_files.keys())
 
-# 3. Embeddings
 embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
 aa = """
@@ -36,17 +34,13 @@ for subject, path in pdf_files.items():
     vectorstore.save_local(f"{subject}_db")
 """
 
-# 4. Load FAISS vector stores
-
 vectorstores = {
     subject: FAISS.load_local(f"{subject}_db", embeddings, allow_dangerous_deserialization=True)
     for subject in subjects
 }
 
-# 5. Gemini LLM
 llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.3)
 
-# 6. Create subject-specific tools
 tools = []
 for subject, vs in vectorstores.items():
     qa_chain = RetrievalQA.from_chain_type(llm=llm, retriever=vs.as_retriever())
@@ -58,7 +52,6 @@ for subject, vs in vectorstores.items():
         )
     )
 
-# 7. Create agent using initialize_agent
 agent = initialize_agent(
     tools=tools,
     llm=llm,
@@ -66,7 +59,6 @@ agent = initialize_agent(
     verbose=True
 )
 
-# 8. Streamlit UI
 st.set_page_config(page_title="TutorBot", page_icon="📘")
 st.title("📘 RAG Based Tutor chatbot")
 
@@ -76,3 +68,4 @@ if query:
         response = agent.invoke(query)
         st.markdown("### 📘 Answer")
         st.write(response)
+
