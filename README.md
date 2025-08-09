@@ -69,13 +69,3 @@ Edit
 - Answer is shown in Streamlit, along with relevant sources.
 
 ---
-
-
-yaml
-Copy
-Edit
-
----
-
-## 📦 Installation
-
